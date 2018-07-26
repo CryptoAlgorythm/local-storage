@@ -11,6 +11,13 @@ class App extends Component {
     };
   }
 
+  updateInput(key, value) {
+    // update react state
+    this.setState({
+      [key]: value
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -18,9 +25,16 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div>
+          Add an item to the list
+          <br />
+          <input
+            type="text"
+            placeholder="Type item here"
+            value={this.state.newItem}
+            onChange={e => this.updateInput("newItem", e.target.value)}
+          />
+        </div>
       </div>
     );
   }
