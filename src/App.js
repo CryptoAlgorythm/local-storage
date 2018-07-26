@@ -23,7 +23,7 @@ class App extends Component {
 
     const newItem = {
       id: 1 + Math.random(),
-      value: this.state.newItem.slice()
+      value: this.state.newItem
     }
 
     // copy current list of items
@@ -58,7 +58,19 @@ class App extends Component {
           <button
             onClick={() => this.addItem()}
             disabled={!this.state.newItem.length}
-          />
+          >
+            &#43; Add
+          </button>
+          <br /><br />
+          <ul>
+            {this.state.list.map(item => {
+              return (
+                <li key={item.id}>
+                  {item.value}
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </div>
     );
