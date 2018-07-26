@@ -11,10 +11,31 @@ class App extends Component {
     };
   }
 
-  updateInput(key, value) {
+  updateInput(value) {
     // update react state
     this.setState({
-      [key]: value
+      newItem: value
+    })
+  }
+
+  addItem() {
+    // create new item
+
+    const newItem = {
+      id: 1 + Math.random(),
+      value: this.state.newItem.slice()
+    }
+
+    // copy current list of items
+    const list = [...this.state.list]
+
+    // add the new item to the list
+    list.push(newItem);
+
+    // update state with new list, reset the new item input
+    this.setState({
+      list,
+      newItem: ""
     })
   }
 
@@ -32,7 +53,11 @@ class App extends Component {
             type="text"
             placeholder="Type item here"
             value={this.state.newItem}
-            onChange={e => this.updateInput("newItem", e.target.value)}
+            onChange={e => this.updateInput(e.target.value)}
+          />
+          <button
+            onClick={() => this.addItem()}
+            disabled={!this.state.newItem.length}
           />
         </div>
       </div>
