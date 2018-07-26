@@ -11,11 +11,16 @@ class App extends Component {
     };
   }
 
-  updateInput(value) {
+  updateInput(key, value) {
     // update react state
     this.setState({
-      newItem: value
+      [key]: value
     })
+
+    // update localStorage
+    // key: string - the name of the localStorage item
+    // value: string - the value you want 
+    localStorage.setItem(key, value);
   }
 
   addItem() {
@@ -37,6 +42,22 @@ class App extends Component {
       list,
       newItem: ""
     })
+
+    // update localStorage
+    localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("newItem", "");
+  }
+
+  deleteItem(id) {
+    // copy current list of items
+    const list = [...this.state.list];
+    // filter out the item being deleted
+
+    const updatedList = list.filter(item => item.id !== id)
+
+    this.setState({
+      list: updatedList
+    })
   }
 
   render() {
@@ -53,7 +74,7 @@ class App extends Component {
             type="text"
             placeholder="Type item here"
             value={this.state.newItem}
-            onChange={e => this.updateInput(e.target.value)}
+            onChange={e => this.updateInput("newItem", e.target.value)}
           />
           <button
             onClick={() => this.addItem()}
@@ -62,11 +83,24 @@ class App extends Component {
             &#43; Add
           </button>
           <br /><br />
-          <ul>
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 50,
+              textAlign: "left",
+              maxWidth: 500,
+              margin: "auto"
+            }}
+          >
             {this.state.list.map(item => {
               return (
                 <li key={item.id}>
                   {item.value}
+                  <button
+                    onClick={() => this.deleteItem(item.id)}
+                  >
+                    &#45; Remove
+                  </button>
                 </li>
               )
             })}
