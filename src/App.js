@@ -58,6 +58,9 @@ class App extends Component {
     this.setState({
       list: updatedList
     })
+
+    // update localStorage
+    localStorage.setItem("list", JSON.stringify(updatedList));
   }
 
   render() {
